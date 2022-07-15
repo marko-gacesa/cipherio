@@ -16,11 +16,16 @@ func RequiredBlockSize(dataSize, blockSize int) int {
 
 // FitToBlock fits the provided data to a blockSize memory chunk.
 func FitToBlock(data []byte, blockSize int) []byte {
-	if len(data) == 0 {
+	l := len(data)
+	if l == 0 {
 		return nil
 	}
 
-	size := RequiredBlockSize(len(data), blockSize)
+	size := RequiredBlockSize(l, blockSize)
+	if l == size {
+		return data
+	}
+
 	a := make([]byte, size)
 	copy(a, data)
 
